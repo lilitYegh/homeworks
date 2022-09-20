@@ -1,27 +1,35 @@
-
 #include <iostream>
+#include <mutex>
+std::mutex mutex;
 class Singleton
 {
     private:
         static Singleton* instance;
         int m_num{0};
-        Singleton(int num) : m_num{num}
-        {}
-        Singleton() = default;
+        Singleton(const int num) : m_num{num}
+        {
+            std::lock_guard<std::mutex> myLock(mutex);
+        }
+        Singleton()
+        {
+            std::lock_guard<std::mutex> myLock(mutex);
+        }
     public:
+        Singleton(const Singleton &) = delete;
+        void operator=(const Singleton &) = delete;
         static Singleton* getInstance(int num = 0)
         {
-            if(!instance)
+            if(instance == nullptr)
             {
-                instance = new Singleton;
+                instance = new Singleton(num);
             }
             return instance;
         }
-        void setNum(int num)
+        void setNum(const int num)
         {
             m_num = num;
         }
-        int getNum()
+        int getNum() const
         {
             return m_num;
         }
