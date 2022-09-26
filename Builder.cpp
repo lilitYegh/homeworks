@@ -27,6 +27,10 @@ public:
     {
         this->wings = wings;
     }
+    void print()
+    {
+        std::cout << "head " << head << "/n";
+    }
 private:
     int head{0};
     int body{0};
@@ -50,35 +54,35 @@ public:
 class CatBuilder: public AnimalBuilder
 {
 private:
-    Animal animal;
+    Animal* animal;
 public:
     CatBuilder()
     {
-        this->animal =* new Animal();
+        this->animal = new Animal();
     }
     void build_head() override
     {
-        this->animal.set_head(1);
+        this->animal->set_head(1);
     }
     void build_body()  override
     {
-        this->animal.body = 1;
+        this->animal->set_body(1);
     }
     void build_tail() override
     {
-        this->animal.tail = 1;
+        this->animal->set_tail(1);
     }
     void build_feet() override
     {
-        this->animal.feet = 4;
+        this->animal->set_feet(4);
     }
     void build_hands() override
     {
-        this->animal.hands = 0;   
+        this->animal->set_hands(0);   
     }
     void build_wings() override
     {
-        this->animal.wings = 0;
+        this->animal->set_wings(0);
     }
     Animal* get_animal() override
     {
@@ -93,31 +97,31 @@ private:
 public:
     DragonBuilder()
     {
-        this->animal = * new Animal();
+        this->animal =  new Animal();
     }
     void build_head() override
     {
-        this->animal.head = 3;
+        this->animal->set_head(3);
     }
     void build_body()  override
     {
-        this->animal.body = 1;
+        this->animal->set_body(1);
     }
     void build_tail() override
     {
-        this->animal.tail = 1;
+        this->animal->set_tail(1);
     }
     void build_feet() override
     {
-        this->animal.feet = 2;
+        this->animal->set_feet(2);
     }
     void build_hands() override
     {
-        this->animal.hands = 2;   
+        this->animal->set_hands(2);   
     }
     void build_wings() override
     {
-        this->animal.wings = 2;
+        this->animal->set_wings(2);
     }
     Animal* get_animal() override
     {
@@ -125,8 +129,27 @@ public:
     }
 };
 
-int main() {
-
-
-    return 0;
-}
+class Builder
+{
+private:
+    AnimalBuilder* animalBuilder;
+public:
+    Builder (AnimalBuilder* animalb)
+    {
+        animalBuilder = animalb;
+    }
+    Animal* get_animal() 
+    {
+        return this->animalBuilder->get_animal();
+    }
+    void buildAnimal() 
+    { 
+        animalBuilder->build_head(); 
+        animalBuilder->build_body(); 
+        animalBuilder->build_tail(); 
+        animalBuilder->build_feet(); 
+        animalBuilder->build_hands(); 
+        animalBuilder->build_wings(); 
+    } 
+    
+};
