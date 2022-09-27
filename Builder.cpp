@@ -3,6 +3,7 @@
 class Animal
 {
 public:   
+    Animal() = default;
     void set_head(int head)
     {
         this->head = head;
@@ -29,7 +30,7 @@ public:
     }
     void print()
     {
-        std::cout << "head " << head << "/n";
+        std::cout << "head " << head << "\n";
     }
 private:
     int head{0};
@@ -41,115 +42,110 @@ private:
 };
 class AnimalBuilder
 {
+protected:
+    Animal* animal;
 public:
-    virtual void build_head();
-    virtual void build_body();
-    virtual void build_tail();
-    virtual void build_feet();
-    virtual void build_hands();
-    virtual void build_wings();
-    virtual Animal* get_animal();
+    virtual void build_head() = 0;
+    virtual void build_body() = 0;
+    virtual void build_tail() = 0;
+    virtual void build_feet() = 0;
+    virtual void build_hands() = 0;
+    virtual void build_wings() = 0;
+    Animal* get_animal()
+    {
+        return animal;
+    }
    
 };
 class CatBuilder: public AnimalBuilder
 {
-private:
-    Animal* animal;
 public:
-    CatBuilder()
+    void build_head()
     {
-        this->animal = new Animal();
-    }
-    void build_head() override
-    {
+        animal = new Animal();
         this->animal->set_head(1);
     }
-    void build_body()  override
+    void build_body()
     {
         this->animal->set_body(1);
     }
-    void build_tail() override
+    void build_tail()
     {
         this->animal->set_tail(1);
     }
-    void build_feet() override
+    void build_feet()
     {
         this->animal->set_feet(4);
     }
-    void build_hands() override
+    void build_hands()
     {
         this->animal->set_hands(0);   
     }
-    void build_wings() override
+    void build_wings()
     {
         this->animal->set_wings(0);
     }
-    Animal* get_animal() override
-    {
-        return this->animal;
-    }
+
 };
 
 class DragonBuilder: public AnimalBuilder
 {
-private:
-    Animal* animal;
 public:
-    DragonBuilder()
+    void build_head()
     {
-        this->animal =  new Animal();
-    }
-    void build_head() override
-    {
+        animal = new Animal();
         this->animal->set_head(3);
     }
-    void build_body()  override
+    void build_body() 
     {
         this->animal->set_body(1);
     }
-    void build_tail() override
+    void build_tail()
     {
         this->animal->set_tail(1);
     }
-    void build_feet() override
+    void build_feet()
     {
         this->animal->set_feet(2);
     }
-    void build_hands() override
+    void build_hands()
     {
         this->animal->set_hands(2);   
     }
-    void build_wings() override
+    void build_wings() 
     {
         this->animal->set_wings(2);
     }
-    Animal* get_animal() override
-    {
-        return this->animal;
-    }
+  
 };
 
-class Builder
+class Director
 {
 private:
     AnimalBuilder* animalBuilder;
 public:
-    Builder (AnimalBuilder* animalb)
+
+    Animal* create_animal(AnimalBuilder* animalb) 
     {
-        animalBuilder = animalb;
+        animalb->build_head(); 
+        animalb->build_body(); 
+        animalb->build_tail(); 
+        animalb->build_feet(); 
+        animalb->build_hands(); 
+        animalb->build_wings();
+        return animalb->get_animal();
     }
-    Animal* get_animal() 
-    {
-        return this->animalBuilder->get_animal();
-    }
-    void buildAnimal() 
-    { 
-        animalBuilder->build_head(); 
-        animalBuilder->build_body(); 
-        animalBuilder->build_tail(); 
-        animalBuilder->build_feet(); 
-        animalBuilder->build_hands(); 
-        animalBuilder->build_wings(); 
-    } 
+
     
 };
+int main()
+{
+    Director dir;
+    CatBuilder cat;
+    DragonBuilder db;
+    Animal *catp = dir.create_animal(&cat);
+    Animal *dbp = dir.create_animal(&db);
+    catp->print();
+    dbp->print();
+    return 0;
+}
