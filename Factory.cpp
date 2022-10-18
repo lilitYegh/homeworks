@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cmath>
-
+#include <memory>
 class Point
 {
 private:
@@ -8,17 +8,17 @@ private:
             :m_x(x),
             m_y(y)
         {}
-    
+
     class PointFactory
     {
     public:
-        static Point makePolarPoint(float r, float t)
+        static std::unique_ptr<Point> makePolarPoint(float r, float t)
         {
-            return Point{r * std::cos(t), r * std::sin(t)};
+            return std::unique_ptr<Point>(new Point(r * std::cos(t), r * std::sin(t)));
         }
-        static Point makeCartesianPoint(float x, float y)
+        static std::unique_ptr<Point> makeCartesianPoint(float x, float y)
         {
-            return Point{x, y};
+            return std::unique_ptr<Point> ( new Point{x, y});
         }
     };
 public:
@@ -35,10 +35,10 @@ private:
 
 int main() 
 {
-    Point pPolar = Point::pointFactory.makePolarPoint(4, 6.28);
-    pPolar.print();
-    Point pCarest = Point::pointFactory.makeCarestianPoint(4, 6.28);
-    pCarest.print();
-    
+    std::unique_ptr<Point> pPolar = Point::pointFactory.makePolarPoint(4, 6.28);
+    pPolar->print();
+    std::unique_ptr<Point> pCarest = Point::pointFactory.makeCartesianPoint(4, 6.28);
+    pCarest->print();
+
     return 0;
 }
