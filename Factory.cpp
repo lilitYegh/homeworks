@@ -16,7 +16,7 @@ private:
         {
             return Point{r * std::cos(t), r * std::sin(t)};
         }
-        static Point makeCarestianPoint(float x, float y)
+        static Point makeCartesianPoint(float x, float y)
         {
             return Point{x, y};
         }
