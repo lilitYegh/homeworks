@@ -4,7 +4,7 @@
 class Burger
 {
 public:
-    virtual ~Burger(){};
+    virtual ~Burger() = default;
     virtual std::string Serve() = 0;
     virtual float Price() = 0;
 };
