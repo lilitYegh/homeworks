@@ -14,6 +14,7 @@ class ClassicBurger : public Burger
 private:
     float m_price = 10.2;
 public:
+    ~ClassicBurger() override = default;
     std::string Serve() override
     {
         return "Burger";
@@ -29,6 +30,7 @@ class BurgerDecorator : public Burger
 protected:
     Burger* m_burger;
 public:
+    ~BurgerDecorator() override = default;
     BurgerDecorator(Burger* burger)
             :m_burger(burger)
     {}
@@ -48,6 +50,7 @@ class Cheeseburger : public BurgerDecorator
 private:
     float m_cheese_price = 2.8;
 public:
+    ~Cheeseburger() override = default;
     Cheeseburger(Burger* burger)
             :BurgerDecorator(burger)
     {}
@@ -65,6 +68,7 @@ class SpicyBurger : public BurgerDecorator
 private:
     float m_jalapeno_price = 1.4;
 public:
+    ~SpicyBurger() override = default;
     SpicyBurger(Burger* burger)
             :BurgerDecorator(burger)
     {}
