@@ -71,6 +71,12 @@ class CatBuilder: public AnimalBuilder
 {
 private:
      Cat* animal;
+     int m_head = 1;
+     int m_body = 1;
+     int m_tail = 1;
+     int m_feet = 4;
+     int m_hands = 0;
+     int m_wings = 0;
 public:
     CatBuilder()
     {
@@ -78,27 +84,27 @@ public:
     }
     void build_head()
     {
-        this->animal->set_head(1);
+        this->animal->set_head(m_head);
     }
     void build_body()
     {
-        this->animal->set_body(1);
+        this->animal->set_body(m_body);
     }
     void build_tail()
     {
-        this->animal->set_tail(1);
+        this->animal->set_tail(m_tail);
     }
     void build_feet()
     {
-        this->animal->set_feet(4);
+        this->animal->set_feet(m_feet);
     }
     void build_hands()
     {
-        this->animal->set_hands(0);   
+        this->animal->set_hands(m_hands);   
     }
     void build_wings()
     {
-        this->animal->set_wings(0);
+        this->animal->set_wings(m_wings);
     }
     Cat* get_animal()
     {
@@ -110,7 +116,13 @@ public:
 class DragonBuilder: public AnimalBuilder
 {
 private:
-    Dragon* animal;
+    Dragon* animal;    
+    int m_head = 3;
+    int m_body = 1;
+    int m_tail = 1;
+    int m_feet = 2;
+    int m_hands = 2;
+    int m_wings = 2;
 public:
     DragonBuilder()
     {
@@ -118,27 +130,27 @@ public:
     }
     void build_head()
     {
-        this->animal->set_head(3);
+        this->animal->set_head(m_head);
     }
-    void build_body() 
+    void build_body()
     {
-        this->animal->set_body(1);
+        this->animal->set_body(m_body);
     }
     void build_tail()
     {
-        this->animal->set_tail(1);
+        this->animal->set_tail(m_tail);
     }
     void build_feet()
     {
-        this->animal->set_feet(2);
+        this->animal->set_feet(m_feet);
     }
     void build_hands()
     {
-        this->animal->set_hands(2);   
+        this->animal->set_hands(m_hands);   
     }
-    void build_wings() 
+    void build_wings()
     {
-        this->animal->set_wings(2);
+        this->animal->set_wings(m_wings);
     }
     Dragon* get_animal()
     {
